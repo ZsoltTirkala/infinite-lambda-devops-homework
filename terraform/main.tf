@@ -7,6 +7,9 @@ resource "aws_s3_bucket" "static_website_s3_bucket" {
   bucket = var.s3_bucket_name
   acl    = var.s3_bucket_acl
   policy = file("policy.json")
+  tags = {
+    Name = var.s3_bucket_name
+  }
 
   website {
     index_document = "index.html"
