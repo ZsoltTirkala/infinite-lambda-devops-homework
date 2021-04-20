@@ -23,3 +23,16 @@ resource "aws_s3_bucket" "static_website_s3_bucket" {
 EOF
   }
 }
+
+resource "aws_instance" "ec2_for_jenkins" {
+  ami           = var.image_id
+  instance_type = var.ec2_instance_type
+  key_name      = var.ec2_key_pair
+  tags = {
+    Name = var.ec2_instance_name
+  }
+}
+
+resource "aws_ecr_repository" "app-repository" {
+  name = var.ecr_repository_name
+}
