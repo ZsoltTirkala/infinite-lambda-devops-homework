@@ -1,3 +1,15 @@
+variable "aws_profile" {
+  description = "The name of the AWS profile"
+  type        = string
+  default     = "default"
+}
+
+variable "aws_region" {
+  description = "AWS working region"
+  type        = string
+  default     = "eu-west-2"
+}
+
 variable "s3_bucket_name" {
   description = "The name tag's value of the S3 bucket"
   type        = string
