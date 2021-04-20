@@ -1,6 +1,6 @@
 provider "aws" {
-  profile = "default"
-  region  = "eu-west-2"
+  profile = var.aws_profile
+  region  = var.aws_region
 }
 
 resource "aws_s3_bucket" "static_website_s3_bucket" {
