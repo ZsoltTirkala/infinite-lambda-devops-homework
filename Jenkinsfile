@@ -6,7 +6,7 @@ pipeline {
     REGION = 'eu-west-2'
     ECR_REPOSITORY = 'il-homework-zs'
     VERSION = 'latest'
-    CREDENTIALS = 'credentials'
+    CREDENTIALS = credentials('AWS_CREDENTIALS')
     DOCKERFILE_PATH = './app/'
     BUCKET_NAME = "site-host-bucket-zs"
   }
