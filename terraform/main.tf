@@ -45,6 +45,20 @@ resource "aws_instance" "ec2_for_jenkins" {
   }
 }
 
-resource "aws_ecr_repository" "app-repository" {
+resource "aws_ecr_repository" "app_ecr" {
   name = var.ecr_repository_name
+}
+
+resource "aws_db_instance" "il_rds_postgres" {
+  allocated_storage     = var.rds_allocated_storage
+  max_allocated_storage = var.rds_max_allocated_storage
+  engine                = var.rds_engine
+  engine_version        = var.rds_engine_version
+  instance_class        = var.rds_instance_class
+  identifier            = var.rds_identifier
+  name                  = data.aws_ssm_parameter.rds_db_name.value
+  username              = data.aws_ssm_parameter.rds_username.value
+  password              = data.aws_ssm_parameter.rds_password.value
+  skip_final_snapshot   = true
+  publicly_accessible   = true
 }
