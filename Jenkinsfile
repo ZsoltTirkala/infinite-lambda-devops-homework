@@ -16,7 +16,7 @@ pipeline {
     stage('Git cloning'){
       steps {
         git branch: 'main',
-            credentialsId: 'github',
+            credentialsId: 'github2',
             url: 'https://github.com/ZsoltTirkala/infinite-lambda-devops-homework.git'
       }
     }
