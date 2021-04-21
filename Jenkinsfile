@@ -8,23 +8,25 @@ pipeline {
     VERSION = 'latest'
     CREDENTIALS = 'credentials'
     DOCKERFILE_PATH = './app/'
-    BUCKET = "site-host-bucket-zs"
+    BUCKET_NAME = "site-host-bucket-zs"
   }
 
-  stages 
 
-    stage('Git cloning') {
+  stages {
+    stage('Git cloning'){
       steps {
         git branch: 'main',
-        credentialsId: 'github',
+            credentialsId: 'github',
             url: 'https://github.com/ZsoltTirkala/infinite-lambda-devops-homework.git'
       }
     }
 
+  
+
 
     stage('Build image and push') {
-        steps {
-            script {
+      steps {
+        script {
             docker.build("${ECR_REPOSITORY}", "${DOCKERFILE_PATH}")
             docker.withRegistry("https://${REGISTRY}", "ecr:${REGION}:${CREDENTIALS}") { 
             docker.image("${ECR_REPOSITORY}").push("${VERSION}") 
@@ -37,7 +39,7 @@ pipeline {
     stage('Deploy website to S3') {
       steps {
         withAWS(credentials:"${CREDENTIALS}", region:"${REGION}") {
-          s3Upload(file:'app/templates/index.html', bucket:"${BUCKET}", path:'index.html')
+          s3Upload(file:'app/templates/index.html', bucket:"${BUCKET_NAME}", path:'index.html')
         }
       }
     }
@@ -45,10 +47,10 @@ pipeline {
 
   post {
     success {
-      sh "echo Success!" 
+      sh "echo Successfully builded docker image and pushed it to the ${ECR_REPOSITORY} ECR! 
     }
     failure {
-      sh "echo Fail!"
+      sh "echo Failure!"
     }
   }
 }
