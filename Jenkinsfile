@@ -47,7 +47,7 @@ pipeline {
 
   post {
     success {
-      sh "echo Successfully builded docker image and pushed it to the ${ECR_REPOSITORY} ECR! 
+      sh "echo Successfully builded docker image and pushed it to the ${ECR_REPOSITORY} ECR!" 
     }
     failure {
       sh "echo Failure!"
