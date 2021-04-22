@@ -1,15 +1,3 @@
-data "aws_ssm_parameter" "rds_username" {
-  name = "rds_username"
-}
-
-data "aws_ssm_parameter" "rds_password" {
-  name = "rds_password"
-}
-
-data "aws_ssm_parameter" "rds_db_name" {
-  name = "rds_db_name"
-}
-
 variable "aws_profile" {
   description = "The name of the AWS profile"
   type        = string
@@ -43,7 +31,7 @@ variable "image_id" {
 variable "ec2_instance_type" {
   description = "EC2 free tier instance"
   type        = string
-  default     = "t3.micro"
+  default     = "t2.medium"
 }
 
 variable "ec2_key_pair" {
