@@ -14,6 +14,8 @@ provider "aws" {
 
 resource "aws_vpc" "test_vpc" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
 
   tags = {
     Name = "test-vpc"
@@ -57,7 +59,7 @@ resource "aws_internet_gateway" "test_internet_gateway" {
 }
 
 resource "aws_db_subnet_group" "test_rds_subnet" {
-  name       = "main"
+  name       = "test-rds-subnet"
   subnet_ids = [aws_subnet.test_subneta.id,aws_subnet.test_subnetb.id]
 
   tags = {
@@ -68,6 +70,7 @@ resource "aws_db_subnet_group" "test_rds_subnet" {
 resource "aws_s3_bucket" "static_website_s3_bucket" {
   bucket = var.s3_bucket_name
   acl    = var.s3_bucket_acl
+  force_destroy = true
   policy = file("policy.json")
   tags = {
     Name = var.s3_bucket_name
@@ -123,5 +126,5 @@ resource "aws_db_instance" "il_rds_postgres" {
   password              = data.aws_ssm_parameter.rds_password.value
   db_subnet_group_name  = aws_db_subnet_group.test_rds_subnet.name
   skip_final_snapshot   = true
-  publicly_accessible   = false
+  publicly_accessible   = true
 }
